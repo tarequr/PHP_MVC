@@ -15,4 +15,15 @@ class Controller
 			include "../app/views/404.php";
 		}
 	}
+
+	function loadModel($model)
+	{
+		if (file_exists("../app/models/". $model .".php")) {
+			include "../app/models/". $model .".php";
+
+			return $model = new $model();
+		}
+
+		return false;
+	}
 }
