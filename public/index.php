@@ -1,10 +1,10 @@
 <?php 
 
-session_start();
+	session_start();
 
-require "../app/init.php";
+	require "../app/init.php";
 
-// echo "Welcome To MVC";
-$app = new App();
+	// echo "Welcome To MVC";
+	$app = new App();
 
 ?>
