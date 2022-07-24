@@ -10,9 +10,8 @@ class Database
 	{
 		try {
 			
-			$string = "mysql:host=localhost;dbname=phpmvc_db;";
-			$db     = new PDO($string,'root','');
-			show($db);
+			$string = DB_TYPE .":host=".DB_HOST.";dbname=".DB_NAME.";";
+			return $db     = new PDO($string,DB_USER,DB_PASS);
 
 		} catch (PDOException $e) {
 			die($e->getMessage());
@@ -21,12 +20,50 @@ class Database
 
 	public function read($query, $data = [])
 	{
-		// code...
+		$DB  = $this->db_connect();
+		$stm = $DB->prepare($query);
+
+		if (count($data) == 0) {
+			$stm = $DB->query($query);
+			$check  = 0;
+
+			if ($stm) {
+				$check = 1;
+			}
+		} else{
+			$check  = $stm->execute($data);
+		}
+
+
+		if ($check) {
+			return $stm->fetchAll(PDO::FETCH_OBJ);
+		} else{
+			return false;
+		}
 	}
 
 	public function write($query, $data = [])
 	{
-		// code...
+		$DB  = $this->db_connect();
+		$stm = $DB->prepare($query);
+
+		if (count($data) == 0) {
+			$stm = $DB->query($query);
+			$check  = 0;
+			
+			if ($stm) {
+				$check = 1;
+			}
+		} else{
+			$check  = $stm->execute($data);
+		}
+
+
+		if ($check) {
+			return true;
+		} else{
+			return false;
+		}
 	}
 
 }
